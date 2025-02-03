@@ -9,7 +9,7 @@ from src.pipeline.inference.model_inference import infer
 from src.pipeline.training.model_optimizer import get_optimizer
 from src.pipeline.training.model_training import train_model
 from src.utils.project_directories import get_data_dir_str, get_model_dir_str
-from src.pipeline.data.data_loader import get_data_loader
+from src.pipeline.data.data_loader import get_data_loader, get_train_val_loaders
 from src.pipeline.model.segmentation_model import get_model
 
 
@@ -30,8 +30,9 @@ model_dir = get_model_dir_str()
 
 
 def model_fine_tuning(criterion, model_path=''):
-    # Setup DataLoader
-    data_loader = get_data_loader(root_dir, batch_size=50)
+    # Setup DataLoader: split the dataset into train and validation
+    # data_loader = get_data_loader(root_dir, batch_size=50)
+    train_loader, val_loader = get_train_val_loaders(root_dir, batch_size=50)
 
     # Load and prepare Model
     model = get_model(device)
@@ -45,15 +46,20 @@ def model_fine_tuning(criterion, model_path=''):
     # train_model(model, data_loader, criterion, optimizer, device)
 
     # Train the Model and capture loss history
-    epoch_losses = train_model(model, data_loader, criterion, optimizer, device, num_epochs=10)
+    # epoch_losses = train_model(model, data_loader, criterion, optimizer, device, num_epochs=10)
+
+    # Train the model with validation tracking
+    epoch_losses, val_losses, val_dice_scores, val_iou_scores = train_model(
+        model, train_loader, val_loader, criterion, optimizer, device, num_epochs=10
+    )
 
     # Save Fine-Tuned Model Parameters
-    model_filename = 'caravana_model_1.pth'
+    model_filename = 'carvana_model_2.pth'
     model_path = os.path.join(model_dir, model_filename)
 
     torch.save(model.state_dict(), model_path)
 
-    return model, epoch_losses
+    return model, epoch_losses, val_losses, val_dice_scores, val_iou_scores
 
 
 def model_inference(criterion, load_model_params=False, model_path=''):
@@ -95,7 +101,7 @@ def model_inference(criterion, load_model_params=False, model_path=''):
 
 # Main Function
 if __name__ == '__main__':
-    model_filename = 'caravana_model_1.pth'
+    model_filename = 'carvana_model_2.pth'
     model_path = os.path.join(model_dir, model_filename)
 
     criterion = nn.BCEWithLogitsLoss()
