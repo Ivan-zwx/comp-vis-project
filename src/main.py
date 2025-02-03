@@ -60,6 +60,7 @@ def model_inference(criterion, load_model_params=False, model_path=''):
     if load_model_params:
         # Load Fine-Tuned Model Parameters
         model.load_state_dict(torch.load(model_path))
+        model.to(device)
 
     # Perform Full Dataset Inference
     images, true_masks, pred_masks = infer(model, data_loader, device)

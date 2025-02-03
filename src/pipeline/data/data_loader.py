@@ -5,6 +5,8 @@ from src.pipeline.data.segmentation_dataset import SegmentationDataset
 
 
 # Data Loader and Transformations
-def get_data_loader(root_dir, transform=get_data_transform(), batch_size=5, shuffle=True):
+def get_data_loader(root_dir, transform=get_data_transform(), batch_size=50, shuffle=True,
+                    pin_memory=True, num_workers=5):
     dataset = SegmentationDataset(root_dir, transform=transform)
-    return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)
+    return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle,
+                      pin_memory=pin_memory, num_workers=num_workers)
