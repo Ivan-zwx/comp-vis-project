@@ -8,7 +8,7 @@ from src.pipeline.evaluation.model_visualization import visualize_results
 from src.pipeline.inference.model_inference import infer
 from src.pipeline.training.model_optimizer import get_optimizer
 from src.pipeline.training.model_training import train_model
-from src.utils.project_directories import get_data_subdir_str, get_model_dir_str
+from src.utils.project_directories import get_data_dir_str, get_model_dir_str
 from src.pipeline.data.data_loader import get_data_loader
 from src.pipeline.model.segmentation_model import get_model
 
@@ -22,8 +22,9 @@ from src.pipeline.model.segmentation_model import get_model
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cpu")
 
-root_dir = get_data_subdir_str()
+root_dir = get_data_dir_str()
 model_dir = get_model_dir_str()
 
 
@@ -82,6 +83,6 @@ if __name__ == '__main__':
     criterion = nn.BCEWithLogitsLoss()
 
     # model_fine_tuning(criterion=criterion, model_path=model_path)
-    model_inference(criterion=criterion, load_model_params=True, model_path=model_path)
+    model_inference(criterion=criterion, load_model_params=False, model_path=model_path)
 
     pass
