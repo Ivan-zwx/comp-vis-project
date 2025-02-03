@@ -1,7 +1,14 @@
-torch~=2.6.0
-torchvision~=0.21.0
+torch~=2.6.0+cu126
+torchvision~=0.21.0+cu126
+torchaudio~=2.6.0+cu126
 segmentation-models-pytorch~=0.4.0
 pillow~=11.1.0
 matplotlib~=3.10.0
 numpy~=2.2.2
+
+# Basic pip install commands (ported from old project):
 # pip install torch torchvision segmentation-models-pytorch Pillow matplotlib numpy
+
+# Commands to uninstall CPU-only pytorch and install CUDA-supported pytorch (CUDA version 12.6)
+# pip uninstall torch torchvision torchaudio
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
