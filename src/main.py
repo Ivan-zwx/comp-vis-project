@@ -5,6 +5,8 @@ import torch.nn as nn
 # Import evaluation and visualization functions for both inference and training.
 from src.pipeline.evaluation.model_evaluation import evaluate_model, evaluate_metrics
 from src.pipeline.evaluation.model_visualization import visualize_inference_results, visualize_training_results
+from src.pipeline.evaluation.model_logging import log_training_results
+from src.config.parameter_logging import log_parameters
 # Import the inference, optimizer, training, and data loader functions.
 from src.pipeline.inference.model_inference import infer
 from src.pipeline.training.model_optimizer import get_optimizer
@@ -15,6 +17,7 @@ from src.pipeline.model.segmentation_model import get_model
 # Import project directory utilities.
 from src.utils.project_directories import get_data_dir_str, get_model_dir_str
 from src.utils.model_subdirectories import get_model_checkpoint_path
+from src.utils.results_subdirectories import get_resnet34_results_subdirectory
 
 
 # Determine the computation device: use GPU if available, else CPU.
@@ -72,7 +75,17 @@ def model_fine_tuning(criterion, model_path=None):
         print("Checkpoint file deleted.")
 
     # Visualize training progress: loss curves and validation metrics.
-    visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores)
+    # visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores)
+
+    results_dir = get_resnet34_results_subdirectory()
+    plot_file = os.path.join(results_dir, "resnet34_1_training_plot.png")
+    log_file = os.path.join(results_dir, "resnet34_1_training_results.csv")
+    params_file = os.path.join(results_dir, "resnet34_1_training_params.txt")
+    visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores,
+                               plot_path=plot_file)
+    log_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores,
+                         log_path=log_file)
+    log_parameters(params_file)
 
 
 def model_inference(criterion, model_path=None):
@@ -113,7 +126,7 @@ def model_inference(criterion, model_path=None):
 # Main function to execute training or inference.
 if __name__ == '__main__':
     # Define the filename and full path for saving the fine-tuned model.
-    model_filename = 'carvana_model_6.pth'
+    model_filename = 'carvana_resnet34_1.pth'
     model_path = os.path.join(model_dir, model_filename)
 
     # Define the loss function for binary segmentation.

@@ -21,5 +21,5 @@ def get_model_dir_str():
     return str(get_project_dir() / "model")
 
 
-def get_plot_dir():
-    return get_project_dir() / "plot"
+def get_results_dir():
+    return get_project_dir() / "results"

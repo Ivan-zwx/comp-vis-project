@@ -40,7 +40,7 @@ def visualize_inference_results(images, true_masks, pred_masks):
     plt.show()
 
 
-def visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores, num_epochs=TRAINING_CONFIG["num_epochs"]):  # num_epochs=10
+def visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores, num_epochs=TRAINING_CONFIG["num_epochs"], plot_path=None):  # num_epochs=10
 
     # Plot training and validation curves
     epochs = range(1, num_epochs + 1)
@@ -75,4 +75,10 @@ def visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_io
     plt.grid(True)
 
     plt.tight_layout()
-    plt.show()
+
+    # Save the figure if a save path is provided
+    if plot_path:
+        plt.savefig(plot_path, bbox_inches='tight', dpi=300)  # High-quality save
+
+    if not plot_path:
+        plt.show()
