@@ -14,6 +14,7 @@ from src.pipeline.data.data_loader import get_data_loader, get_train_val_loaders
 from src.pipeline.model.segmentation_model import get_model
 # Import project directory utilities.
 from src.utils.project_directories import get_data_dir_str, get_model_dir_str
+from src.utils.model_subdirectories import get_model_checkpoint_path
 
 
 # Determine the computation device: use GPU if available, else CPU.
@@ -51,7 +52,7 @@ def model_fine_tuning(criterion, model_path=None):
     )
 
     # Define the checkpoint file path used during training.
-    checkpoint_path = "best_model_checkpoint.pth"
+    checkpoint_path = get_model_checkpoint_path()
 
     # Load the best model checkpoint (if it exists) so that we use the best performing model.
     if os.path.exists(checkpoint_path):
@@ -112,14 +113,16 @@ def model_inference(criterion, model_path=None):
 # Main function to execute training or inference.
 if __name__ == '__main__':
     # Define the filename and full path for saving the fine-tuned model.
-    model_filename = 'carvana_model_5.pth'
+    model_filename = 'carvana_model_6.pth'
     model_path = os.path.join(model_dir, model_filename)
 
     # Define the loss function for binary segmentation.
     criterion = nn.BCEWithLogitsLoss()
 
     # Run the fine-tuning (training) process.
-    # model_fine_tuning(criterion=criterion, model_path=model_path)
+    model_fine_tuning(criterion=criterion, model_path=model_path)
 
     # Optionally, run inference using the saved model.
-    model_inference(criterion=criterion, model_path=model_path)
+    # model_inference(criterion=criterion, model_path=model_path)
+
+    pass
