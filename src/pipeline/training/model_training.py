@@ -4,8 +4,10 @@ matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 from src.pipeline.evaluation.model_metrics import dice_coefficient, iou_score
 
+from src.config.parameters import TRAINING_CONFIG, LOSS_CONFIG
 
-def train_model(model, train_loader, val_loader, criterion, optimizer, device, num_epochs=10):
+
+def train_model(model, train_loader, val_loader, criterion, optimizer, device, num_epochs=TRAINING_CONFIG["num_epochs"]):  # 10 epochs
     model.train()  # Set the model to training mode
 
     # Track various metrics across epochs
@@ -40,6 +42,7 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, device, n
 
         # Validation step
         model.eval()  # Set the model to validation mode
+
         running_val_loss = 0.0
         dice_scores = []
         iou_scores = []
@@ -52,7 +55,8 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, device, n
                 running_val_loss += val_loss.item() * val_images.size(0)
 
                 # Calculate metrics per batch
-                pred_bin = (torch.sigmoid(val_outputs) > 0.5).float()
+                threshold = LOSS_CONFIG["threshold"]  # 0.5
+                pred_bin = (torch.sigmoid(val_outputs) > threshold).float()
                 for true, pred in zip(val_masks, pred_bin):
                     dice_scores.append(dice_coefficient(pred, true).item())
                     iou_scores.append(iou_score(pred, true).item())

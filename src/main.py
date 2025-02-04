@@ -12,6 +12,8 @@ from src.utils.project_directories import get_data_dir_str, get_model_dir_str
 from src.pipeline.data.data_loader import get_data_loader, get_train_val_loaders
 from src.pipeline.model.segmentation_model import get_model
 
+from src.config.parameters import TRAINING_CONFIG
+
 
 # PIPELINE:
 # segmentation_dataset & mask_normalization >>> data_loader & data_transform
@@ -32,7 +34,7 @@ model_dir = get_model_dir_str()
 def model_fine_tuning(criterion, model_path=None):
     # Setup DataLoader: split the dataset into train and validation
     # data_loader = get_data_loader(root_dir, batch_size=50)
-    train_loader, val_loader = get_train_val_loaders(root_dir, batch_size=50, seed=42)
+    train_loader, val_loader = get_train_val_loaders(root_dir)  # , batch_size=50, seed=42
 
     # Load and prepare Model
     model = get_model(device)
@@ -49,11 +51,11 @@ def model_fine_tuning(criterion, model_path=None):
     # epoch_losses = train_model(model, data_loader, criterion, optimizer, device, num_epochs=10)
 
     # Number of epochs for training (and visualization of training performance)
-    num_epochs = 10
+    # num_epochs = 10  # Obsolete - now in parameters file
 
     # Train the model with validation tracking
     epoch_losses, val_losses, val_dice_scores, val_iou_scores = train_model(
-        model, train_loader, val_loader, criterion, optimizer, device, num_epochs=num_epochs  # 10 epochs by default
+        model, train_loader, val_loader, criterion, optimizer, device,  # num_epochs=num_epochs  # 10 epochs by default
     )
 
     # Save Fine-Tuned Model Parameters
@@ -64,14 +66,14 @@ def model_fine_tuning(criterion, model_path=None):
         torch.save(model.state_dict(), model_path)
 
     # Visualization of model parameter changes per epoch
-    visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores, num_epochs=num_epochs)
+    visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores)  # , num_epochs=num_epochs
 
     # return model, epoch_losses, val_losses, val_dice_scores, val_iou_scores  # No need to return anything here
 
 
 def model_inference(criterion, load_model_params=False, model_path=''):
     # Setup DataLoader
-    data_loader = get_data_loader(root_dir, batch_size=50)
+    data_loader = get_data_loader(root_dir)  # , batch_size=50
 
     # Load Model
     model = get_model(device)
@@ -108,7 +110,7 @@ def model_inference(criterion, load_model_params=False, model_path=''):
 
 # Main Function
 if __name__ == '__main__':
-    model_filename = 'carvana_model_4.pth'
+    model_filename = 'carvana_model_5.pth'
     model_path = os.path.join(model_dir, model_filename)
 
     criterion = nn.BCEWithLogitsLoss()

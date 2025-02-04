@@ -4,12 +4,15 @@ matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 import numpy as np
 
+from src.config.parameters import LOSS_CONFIG, TRAINING_CONFIG
+
 
 # Visualization Function
 def visualize_inference_results(images, true_masks, pred_masks):
     images = images.cpu().numpy()
     true_masks = true_masks.cpu().numpy()
-    pred_masks = torch.sigmoid(pred_masks).cpu().numpy() > 0.5  # Applying threshold to get binary masks
+    threshold = LOSS_CONFIG["threshold"]  # 0.5
+    pred_masks = torch.sigmoid(pred_masks).cpu().numpy() > threshold  # Applying threshold to get binary masks
 
     n_images = 10  # Assuming this is your batch size, adjust if different
 
@@ -37,7 +40,7 @@ def visualize_inference_results(images, true_masks, pred_masks):
     plt.show()
 
 
-def visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores, num_epochs=10):
+def visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores, num_epochs=TRAINING_CONFIG["num_epochs"]):  # num_epochs=10
 
     # Plot training and validation curves
     epochs = range(1, num_epochs + 1)

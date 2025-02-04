@@ -1,6 +1,8 @@
 import torch
 from src.pipeline.evaluation.model_metrics import dice_coefficient, iou_score
 
+from src.config.parameters import LOSS_CONFIG
+
 
 # Model Evaluation processing the predictions already made
 def evaluate_model(all_true_masks, all_pred_masks, criterion, device):
@@ -22,7 +24,9 @@ def evaluate_metrics(true_masks, pred_masks):
     Applies a threshold of 0.5 on the sigmoid of pred_masks.
     """
     # Convert raw outputs to binary predictions
-    pred_masks_bin = (torch.sigmoid(pred_masks) > 0.5).float()
+    threshold = LOSS_CONFIG["threshold"]  # 0.5
+    # Convert raw outputs to binary predictions using the configured threshold
+    pred_masks_bin = (torch.sigmoid(pred_masks) > threshold).float()
     dice_scores = []
     iou_scores = []
     # Loop over each mask pair
