@@ -81,11 +81,12 @@ def model_inference(criterion, model_path=None):
 
     Args:
         criterion: Loss function to use for evaluation.
-        load_model_params: Boolean flag indicating whether to load saved model parameters.
         model_path: Path to the saved model parameters.
     """
     # Setup DataLoader for inference (no shuffling needed).
-    data_loader = get_data_loader(root_dir, shuffle=False)
+    # data_loader = get_data_loader(root_dir, shuffle=False)
+    train_loader, val_loader = get_train_val_loaders(root_dir)
+    data_loader = val_loader
 
     # Initialize the model.
     model = get_model(device)
