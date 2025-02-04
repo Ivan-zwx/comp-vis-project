@@ -69,39 +69,4 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, device, n
 
     print('Finished Training')
 
-    # Plot training and validation curves
-    epochs = range(1, num_epochs + 1)
-    plt.figure(figsize=(12, 4))
-
-    # Loss plot
-    plt.subplot(1, 3, 1)
-    plt.plot(epochs, epoch_losses, marker='o', label='Train Loss')
-    plt.plot(epochs, val_losses, marker='o', label='Val Loss')
-    plt.xlabel('Epoch')
-    plt.ylabel('Loss')
-    plt.title('Loss vs. Epochs')
-    plt.legend()
-    plt.grid(True)
-
-    # Dice plot
-    plt.subplot(1, 3, 2)
-    plt.plot(epochs, val_dice_scores, marker='o', label='Val Dice', color='g')
-    plt.xlabel('Epoch')
-    plt.ylabel('Dice Coefficient')
-    plt.title('Validation Dice vs. Epochs')
-    plt.legend()
-    plt.grid(True)
-
-    # IoU plot
-    plt.subplot(1, 3, 3)
-    plt.plot(epochs, val_iou_scores, marker='o', label='Val IoU', color='r')
-    plt.xlabel('Epoch')
-    plt.ylabel('IoU Score')
-    plt.title('Validation IoU vs. Epochs')
-    plt.legend()
-    plt.grid(True)
-
-    plt.tight_layout()
-    plt.show()
-
     return epoch_losses, val_losses, val_dice_scores, val_iou_scores

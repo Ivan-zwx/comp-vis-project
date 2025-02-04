@@ -6,7 +6,7 @@ import numpy as np
 
 
 # Visualization Function
-def visualize_results(images, true_masks, pred_masks):
+def visualize_inference_results(images, true_masks, pred_masks):
     images = images.cpu().numpy()
     true_masks = true_masks.cpu().numpy()
     pred_masks = torch.sigmoid(pred_masks).cpu().numpy() > 0.5  # Applying threshold to get binary masks
@@ -34,4 +34,42 @@ def visualize_results(images, true_masks, pred_masks):
         axes[i, 2].axis('off')
 
     plt.tight_layout()  # Improve spacing between plots
+    plt.show()
+
+
+def visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores, num_epochs=10):
+
+    # Plot training and validation curves
+    epochs = range(1, num_epochs + 1)
+    plt.figure(figsize=(12, 4))
+
+    # Loss plot
+    plt.subplot(1, 3, 1)
+    plt.plot(epochs, epoch_losses, marker='o', label='Train Loss')
+    plt.plot(epochs, val_losses, marker='o', label='Val Loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('Loss vs. Epochs')
+    plt.legend()
+    plt.grid(True)
+
+    # Dice plot
+    plt.subplot(1, 3, 2)
+    plt.plot(epochs, val_dice_scores, marker='o', label='Val Dice', color='g')
+    plt.xlabel('Epoch')
+    plt.ylabel('Dice Coefficient')
+    plt.title('Validation Dice vs. Epochs')
+    plt.legend()
+    plt.grid(True)
+
+    # IoU plot
+    plt.subplot(1, 3, 3)
+    plt.plot(epochs, val_iou_scores, marker='o', label='Val IoU', color='r')
+    plt.xlabel('Epoch')
+    plt.ylabel('IoU Score')
+    plt.title('Validation IoU vs. Epochs')
+    plt.legend()
+    plt.grid(True)
+
+    plt.tight_layout()
     plt.show()
