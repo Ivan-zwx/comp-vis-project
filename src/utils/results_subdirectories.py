@@ -10,12 +10,12 @@ def get_resnet34_results_subdirectory():
     return resnet34_subdir
 
 
-# def get_model2_results_results_subdirectory():
-#     results_dir = get_results_dir()
-#     resnet34_subdir = results_dir / "model2"
-#     return resnet34_subdir
-#
-#
+def get_efficientnet_b0_results_results_subdirectory():
+    results_dir = get_results_dir()
+    efficientnet_b0_subdir = results_dir / "efficientnet-b0"
+    return efficientnet_b0_subdir
+
+
 # def get_model3_results_results_subdirectory():
 #     results_dir = get_results_dir()
 #     resnet34_subdir = results_dir / "model3"

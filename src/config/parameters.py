@@ -8,7 +8,8 @@
 
 MODEL_CONFIG = {
     # The backbone used for feature extraction.
-    "encoder_name": "resnet34",  # e.g., "resnet34" is a popular choice balancing performance and speed.
+    "encoder_name": "efficientnet-b0",  # e.g., "resnet34" is a popular choice balancing performance and speed.
+    # resnet34, efficientnet-b0
 
     # Pre-trained weights used to initialize the encoder.
     "encoder_weights": "imagenet",  # Using weights pre-trained on ImageNet for faster convergence.
@@ -30,7 +31,7 @@ TRAINING_CONFIG = {
     "learning_rate": 0.001,  # A critical hyperparameter; too high can cause divergence, too low slows convergence.
 
     # Number of epochs for training.
-    "num_epochs": 50,  # Total passes through the training data; impacts both training time and potential overfitting.
+    "num_epochs": 20,  # Total passes through the training data; impacts both training time and potential overfitting.
 
     # Batch size used during training and validation.
     "batch_size": 50,

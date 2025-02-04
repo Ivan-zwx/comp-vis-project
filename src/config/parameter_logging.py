@@ -43,4 +43,4 @@ def log_parameters(log_path, file_path=get_parameters_file_location()):
 
 
 # **One-liner function call to log all dictionaries from parameters.py**
-log_parameters("parameters_log.txt")
+# log_parameters("parameters_log.txt")

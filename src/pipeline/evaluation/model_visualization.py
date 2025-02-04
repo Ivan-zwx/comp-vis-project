@@ -43,7 +43,9 @@ def visualize_inference_results(images, true_masks, pred_masks):
 def visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores, num_epochs=TRAINING_CONFIG["num_epochs"], plot_path=None):  # num_epochs=10
 
     # Plot training and validation curves
-    epochs = range(1, num_epochs + 1)
+    # epochs = range(1, num_epochs + 1)
+    # Account for possible early stopping
+    epochs = range(1, len(epoch_losses) + 1)
     plt.figure(figsize=(12, 4))
 
     # Loss plot

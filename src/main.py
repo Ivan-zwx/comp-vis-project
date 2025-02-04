@@ -17,8 +17,8 @@ from src.pipeline.model.segmentation_model import get_model
 # Import project directory utilities.
 from src.utils.project_directories import get_data_dir_str, get_model_dir_str
 from src.utils.model_subdirectories import get_model_checkpoint_path
-from src.utils.results_subdirectories import get_resnet34_results_subdirectory
-
+from src.utils.results_subdirectories import (get_resnet34_results_subdirectory,
+                                              get_efficientnet_b0_results_results_subdirectory)
 
 # Determine the computation device: use GPU if available, else CPU.
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -75,17 +75,29 @@ def model_fine_tuning(criterion, model_path=None):
         print("Checkpoint file deleted.")
 
     # Visualize training progress: loss curves and validation metrics.
-    # visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores)
+    visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores)
 
-    results_dir = get_resnet34_results_subdirectory()
-    plot_file = os.path.join(results_dir, "resnet34_1_training_plot.png")
-    log_file = os.path.join(results_dir, "resnet34_1_training_results.csv")
-    params_file = os.path.join(results_dir, "resnet34_1_training_params.txt")
-    visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores,
-                               plot_path=plot_file)
-    log_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores,
-                         log_path=log_file)
-    log_parameters(params_file)
+    # SAVE THE TRAINING PERFORMANCE OF RESNET_34 BACKBONE U-NET
+    # results_dir = get_resnet34_results_subdirectory()
+    # plot_file = os.path.join(results_dir, "resnet34_3_training_plot.png")
+    # log_file = os.path.join(results_dir, "resnet34_3_training_results.csv")
+    # params_file = os.path.join(results_dir, "resnet34_3_training_params.txt")
+    # visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores,
+    #                            plot_path=plot_file)
+    # log_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores,
+    #                      log_path=log_file)
+    # log_parameters(params_file)
+
+    # SAVE THE TRAINING PERFORMANCE OF EFFICIENTNET-B0 BACKBONE U-NET
+    # results_dir = get_efficientnet_b0_results_results_subdirectory()
+    # plot_file = os.path.join(results_dir, "efficientnet-b0_1_training_plot.png")
+    # log_file = os.path.join(results_dir, "efficientnet-b0_1_training_results.csv")
+    # params_file = os.path.join(results_dir, "efficientnet-b0_1_training_params.txt")
+    # visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores,
+    #                            plot_path=plot_file)
+    # log_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores,
+    #                      log_path=log_file)
+    # log_parameters(params_file)
 
 
 def model_inference(criterion, model_path=None):
@@ -126,7 +138,7 @@ def model_inference(criterion, model_path=None):
 # Main function to execute training or inference.
 if __name__ == '__main__':
     # Define the filename and full path for saving the fine-tuned model.
-    model_filename = 'carvana_resnet34_1.pth'
+    model_filename = 'carvana_efficientnet-b0_1.pth'
     model_path = os.path.join(model_dir, model_filename)
 
     # Define the loss function for binary segmentation.
