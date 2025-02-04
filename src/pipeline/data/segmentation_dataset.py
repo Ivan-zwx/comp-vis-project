@@ -3,18 +3,7 @@ from torch.utils.data import Dataset
 from PIL import Image
 
 from src.pipeline.data.mask_normalization import normalize_mask
-
-
-def relative_image_dir(root_dir):
-    img_dir = os.path.join(root_dir, "train")
-    img_dir = os.path.join(img_dir, "train")
-    return img_dir
-
-
-def relative_mask_dir(root_dir):
-    mask_dir = os.path.join(root_dir, "train_masks")
-    mask_dir = os.path.join(mask_dir, "train_masks")
-    return mask_dir
+from src.utils.data_directories import get_relative_image_dir, get_relative_mask_dir
 
 
 # Dataset Class
@@ -22,8 +11,8 @@ class SegmentationDataset(Dataset):
     def __init__(self, root_dir, transform=None):
         self.root_dir = root_dir
         self.transform = transform
-        self.image_dir = relative_image_dir(root_dir)
-        self.mask_dir = relative_mask_dir(root_dir)
+        self.image_dir = get_relative_image_dir(root_dir)
+        self.mask_dir = get_relative_mask_dir(root_dir)
         # List only .jpg files in the image_dir
         self.files = [file for file in os.listdir(self.image_dir) if file.endswith('.jpg')]
 

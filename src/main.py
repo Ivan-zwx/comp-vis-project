@@ -50,11 +50,11 @@ def model_fine_tuning(criterion, model_path=''):
 
     # Train the model with validation tracking
     epoch_losses, val_losses, val_dice_scores, val_iou_scores = train_model(
-        model, train_loader, val_loader, criterion, optimizer, device, num_epochs=10
+        model, train_loader, val_loader, criterion, optimizer, device, num_epochs=30  # 10 epochs by default
     )
 
     # Save Fine-Tuned Model Parameters
-    model_filename = 'carvana_model_2.pth'
+    model_filename = 'carvana_model_3.pth'
     model_path = os.path.join(model_dir, model_filename)
 
     torch.save(model.state_dict(), model_path)
@@ -74,7 +74,7 @@ def model_inference(criterion, load_model_params=False, model_path=''):
         model.load_state_dict(torch.load(model_path))
 
     # Ensure model is on GPU
-    model.to(device)
+    # model.to(device)  # Redundant - already done in get_model(device)
 
     # Perform Full Dataset Inference
     images, true_masks, pred_masks = infer(model, data_loader, device)
@@ -101,12 +101,12 @@ def model_inference(criterion, load_model_params=False, model_path=''):
 
 # Main Function
 if __name__ == '__main__':
-    model_filename = 'carvana_model_2.pth'
+    model_filename = 'carvana_model_3.pth'
     model_path = os.path.join(model_dir, model_filename)
 
     criterion = nn.BCEWithLogitsLoss()
 
-    model_fine_tuning(criterion=criterion, model_path=model_path)
-    # model_inference(criterion=criterion, load_model_params=True, model_path=model_path)
+    # model_fine_tuning(criterion=criterion, model_path=model_path)
+    model_inference(criterion=criterion, load_model_params=True, model_path=model_path)
 
     pass

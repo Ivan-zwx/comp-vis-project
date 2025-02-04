@@ -19,3 +19,7 @@ def get_data_dir_str():
 
 def get_model_dir_str():
     return str(get_project_dir() / "model")
+
+
+def get_plot_dir():
+    return get_project_dir() / "plot"
