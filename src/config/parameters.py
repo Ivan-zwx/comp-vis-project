@@ -40,7 +40,10 @@ TRAINING_CONFIG = {
     "train_split": 0.8,  # 80% training, 20% validation; helps gauge model generalization.
 
     # Random seed to ensure reproducible splits between training and validation data.
-    "random_seed": 42  # Fixing the seed ensures the same data split across different runs for fair comparisons.
+    "random_seed": 42,  # Fixing the seed ensures the same data split across different runs for fair comparisons.
+
+    # Early stopping patience: number of epochs with no improvement on validation loss before stopping training.
+    "patience": 3  # If validation loss doesn't improve for 3 consecutive epochs, training is stopped early to prevent overfitting.
 }
 
 ###############################

@@ -2,7 +2,7 @@ from PIL import Image
 import numpy as np
 
 from src.utils.project_directories import get_data_dir_str
-from src.utils.data_directories import get_relative_mask_dir
+from src.utils.data_subdirectories import get_relative_mask_dir
 
 
 def analyze_segmentation_mask_values(mask_image_path):

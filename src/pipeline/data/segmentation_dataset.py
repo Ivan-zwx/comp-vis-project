@@ -3,7 +3,7 @@ from torch.utils.data import Dataset
 from PIL import Image
 
 from src.pipeline.data.mask_normalization import normalize_mask
-from src.utils.data_directories import get_relative_image_dir, get_relative_mask_dir
+from src.utils.data_subdirectories import get_relative_image_dir, get_relative_mask_dir
 
 
 # Dataset Class

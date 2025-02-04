@@ -11,6 +11,7 @@ from src.pipeline.training.model_training import train_model
 from src.utils.project_directories import get_data_dir_str, get_model_dir_str
 from src.pipeline.data.data_loader import get_data_loader, get_train_val_loaders
 from src.pipeline.model.segmentation_model import get_model
+from src.utils.model_subdirectories import get_model_checkpoint_path
 
 from src.config.parameters import TRAINING_CONFIG
 
@@ -62,8 +63,22 @@ def model_fine_tuning(criterion, model_path=None):
     # model_filename = 'carvana_model_4.pth'  # Redundant and obsolete - passed as function parameter
     # model_path = os.path.join(model_dir, model_filename)  # Redundant and obsolete - passed as function parameter
 
+    # Check if a checkpoint exists (which indicates training was interrupted early or ended with early stopping).
+    checkpoint_path = get_model_checkpoint_path()
+    if os.path.exists(checkpoint_path):
+        # Load the best model checkpoint into the current model.
+        model.load_state_dict(torch.load(checkpoint_path))
+        print("Loaded best checkpoint from training.")
+    else:
+        print("No checkpoint found; using the current model state.")
+
     if model_path:
         torch.save(model.state_dict(), model_path)
+
+    # Delete the checkpoint file to avoid interference with future training runs.
+    if os.path.exists(checkpoint_path):
+        os.remove(checkpoint_path)
+        print("Checkpoint file deleted.")
 
     # Visualization of model parameter changes per epoch
     visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores)  # , num_epochs=num_epochs
