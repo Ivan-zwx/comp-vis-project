@@ -80,15 +80,15 @@ def model_fine_tuning(criterion, model_path=None):
     # visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores)
 
     # SAVE THE TRAINING PERFORMANCE OF RESNET_34 BACKBONE U-NET
-    results_dir = get_resnet34_results_subdirectory()
-    plot_file = os.path.join(results_dir, "resnet34_3_training_plot.png")
-    log_file = os.path.join(results_dir, "resnet34_3_training_results.csv")
-    params_file = os.path.join(results_dir, "resnet34_3_training_params.txt")
-    visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores,
-                               plot_path=plot_file)
-    log_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores,
-                         log_path=log_file)
-    log_parameters(params_file)
+    # results_dir = get_resnet34_results_subdirectory()
+    # plot_file = os.path.join(results_dir, "resnet34_4_training_plot.png")
+    # log_file = os.path.join(results_dir, "resnet34_4_training_results.csv")
+    # params_file = os.path.join(results_dir, "resnet34_4_training_params.txt")
+    # visualize_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores,
+    #                            plot_path=plot_file)
+    # log_training_results(epoch_losses, val_losses, val_dice_scores, val_iou_scores,
+    #                      log_path=log_file)
+    # log_parameters(params_file)
 
     # SAVE THE TRAINING PERFORMANCE OF EFFICIENTNET-B0 BACKBONE U-NET
     # results_dir = get_efficientnet_b0_results_subdirectory()
@@ -129,6 +129,7 @@ def model_inference(criterion, model_path=None):
 
     # Initialize the model.
     model = get_model(device)
+    # model = get_model(device, use_custom_model=True)
 
     # Load saved model parameters if requested.
     if model_path:
@@ -151,16 +152,17 @@ def model_inference(criterion, model_path=None):
 # Main function to execute training or inference.
 if __name__ == '__main__':
     # Define the filename and full path for saving the fine-tuned model.
-    model_filename = 'carvana_resnet34_3.pth'
+    # model_filename = 'carvana_custom_unet_2.pth'
+    model_filename = 'test_model_0001.pth'
     model_path = os.path.join(model_dir, model_filename)
 
     # Define the loss function for binary segmentation.
     criterion = nn.BCEWithLogitsLoss()
 
     # Run the fine-tuning (training) process.
-    model_fine_tuning(criterion=criterion, model_path=model_path)
+    # model_fine_tuning(criterion=criterion, model_path=model_path)
 
     # Optionally, run inference using the saved model.
-    # model_inference(criterion=criterion, model_path=model_path)
+    model_inference(criterion=criterion, model_path=model_path)
 
     pass
