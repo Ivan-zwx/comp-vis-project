@@ -49,11 +49,12 @@ def get_train_val_loaders(root_dir, transform=get_data_transform(),
 
 def get_manual_data_loader(root_dir, transform=get_manual_augment_transform(),
                            batch_size=TRAINING_CONFIG["batch_size"],  # 50
+                           shuffle=DATALOADER_CONFIG["shuffle"],  # True
                            # GPU optimizations
                            pin_memory=DATALOADER_CONFIG["pin_memory"],  # True
                            num_workers=DATALOADER_CONFIG["num_workers"]):  # 10
 
     dataset = ManualSegmentationDataset(root_dir, transform=transform)
 
-    return DataLoader(dataset, batch_size=batch_size, shuffle=False,
+    return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle,
                       pin_memory=pin_memory, num_workers=num_workers)

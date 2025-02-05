@@ -11,7 +11,7 @@ from src.config.parameter_logging import log_parameters
 from src.pipeline.inference.model_inference import infer
 from src.pipeline.training.model_optimizer import get_optimizer
 from src.pipeline.training.model_training import train_model
-from src.pipeline.data.data_loader import get_data_loader, get_train_val_loaders
+from src.pipeline.data.data_loader import get_data_loader, get_train_val_loaders, get_manual_data_loader
 # Import the model constructor.
 from src.pipeline.model.segmentation_model import get_model
 # Import project directory utilities.
@@ -149,11 +149,34 @@ def model_inference(criterion, model_path=None):
     visualize_inference_results(images, true_masks, pred_masks)
 
 
+def manual_model_inference(criterion, model_path=None):
+    data_loader = get_manual_data_loader(root_dir, shuffle=False)
+
+    # model = get_model(device)
+    model = get_model(device, use_custom_model=True)
+
+    if model_path:
+        model.load_state_dict(torch.load(model_path))
+
+    images, true_masks, pred_masks = infer(model, data_loader, device)
+
+    average_loss = evaluate_model(true_masks, pred_masks, criterion, device)
+    avg_dice, avg_iou = evaluate_metrics(true_masks, pred_masks)
+    print(f'Average Loss: {average_loss:.6f}')
+    print(f'Average Dice Score: {avg_dice:.6f}')
+    print(f'Average IoU Score: {avg_iou:.6f}')
+
+    visualize_inference_results(images, true_masks, pred_masks)
+
+
 # Main function to execute training or inference.
 if __name__ == '__main__':
     # Define the filename and full path for saving the fine-tuned model.
-    # model_filename = 'carvana_custom_unet_2.pth'
-    model_filename = 'test_model_0001.pth'
+    # 'carvana_resnet34_3.pth'
+    # 'carvana_efficientnet-b0_1.pth'
+    # 'carvana_custom_unet_2.pth'
+    model_filename = 'carvana_custom_unet_2.pth'
+    # model_filename = 'test_model_0001.pth'  # PLACEHOLDER (TO AVOID ACCIDENTS WITH SAVED MODELS)
     model_path = os.path.join(model_dir, model_filename)
 
     # Define the loss function for binary segmentation.
@@ -163,6 +186,9 @@ if __name__ == '__main__':
     # model_fine_tuning(criterion=criterion, model_path=model_path)
 
     # Optionally, run inference using the saved model.
-    model_inference(criterion=criterion, model_path=model_path)
+    # model_inference(criterion=criterion, model_path=model_path)
+
+    # Trained model inference on the manually labeled, augmented dataset.
+    manual_model_inference(criterion=criterion, model_path=model_path)
 
     pass

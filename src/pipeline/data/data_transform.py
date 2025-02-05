@@ -14,6 +14,6 @@ def get_manual_augment_transform():
     return transforms.Compose([
         transforms.Resize(TRANSFORM_CONFIG["resize"]),  # Ensure consistent size
         transforms.RandomHorizontalFlip(),  # Random horizontal flip
-        transforms.RandomRotation(15),  # Random rotation by up to 15 degrees
+        transforms.RandomRotation(5),  # Random rotation by up to 15 degrees
         transforms.ToTensor()
     ])

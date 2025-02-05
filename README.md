@@ -82,16 +82,31 @@ Three variants of U-Net were implemented in this project:
 - Val Dice: 0.993153
 - Val IoU: 0.986409
 
-## 7. Data Enrichment and Manual Annotation
-To further evaluate the models, a subset of the test dataset (which was originally unlabeled) was manually annotated using Roboflow (https://app.roboflow.com/orv-exercises/orv-carvana). Basic data augmentation techniques were applied programmatically to enhance this manually labeled subset.
+## 7. Manual Annotation and Data Augmentation
+To further evaluate the models, a subset of the test dataset (which was originally unlabeled) was manually annotated using Roboflow (https://app.roboflow.com/orv-exercises/orv-carvana). Basic data augmentation techniques were applied programmatically to alter this manually labeled subset.
 
 ## 8. Test Performance on Manually Labeled Data
 
-**U-Net with ResNet-34 Encoder**
+**8.1. U-Net with ResNet-34 Encoder**
 
-**U-Net with EfficientNet-B0 Encoder**
+Example Metrics *(random transformations vary between runs)*:
+- Loss: 0.489818
+- Dice Score: 0.832775
+- IoU Score: 0.735030
 
-**Custom U-Net**
+**8.2. U-Net with EfficientNet-B0 Encoder**
+
+Example Metrics *(random transformations vary between runs)*:
+- Loss: 0.447037
+- Dice Score: 0.829361
+- IoU Score: 0.724559
+
+**8.3. Custom U-Net**
+
+Example Metrics *(random transformations vary between runs)*:
+- Loss: 0.781848
+- Dice Score: 0.839156
+- IoU Score: 0.741388
 
 ## 9. Conclusion
 This project demonstrated the implementation of binary semantic segmentation using U-Net architectures with different backbones and a fully custom U-Net. While the primary goal was not to maximize performance, each model provided insights into segmentation performance and model complexity.
