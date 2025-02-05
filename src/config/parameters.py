@@ -8,7 +8,7 @@
 
 MODEL_CONFIG = {
     # The backbone used for feature extraction.
-    "encoder_name": "efficientnet-b0",  # e.g., "resnet34" is a popular choice balancing performance and speed.
+    "encoder_name": "resnet34",  # e.g., "resnet34" is a popular choice balancing performance and speed.
     # resnet34, efficientnet-b0
 
     # Pre-trained weights used to initialize the encoder.

@@ -7,7 +7,7 @@ This project explores binary semantic segmentation using convolutional neural ne
 The problem tackled in this project is **binary semantic segmentation**. In binary segmentation, each pixel in the input image is classified into one of two classes: foreground (e.g., the object of interest) or background. This task is fundamental in computer vision and is critical for applications such as object detection, medical imaging, and autonomous driving.
 
 ## 3. Dataset Description
-The dataset used in this project is the **Carvana dataset** from Kaggle. The dataset originally consists of high-resolution images of cars along with their corresponding segmentation masks. In this project, we have:
+The dataset used in this project is the **Carvana dataset** from Kaggle (https://www.kaggle.com/competitions/carvana-image-masking-challenge/data). The dataset originally consists of high-resolution images of cars along with their corresponding segmentation masks. This project uses:
 - **Training Data:** Images and corresponding masks from the `train` and `train_masks` directories.
 - **Test Data:** A separate test set without masks, from which a subset was manually labeled using Roboflow for evaluation purposes.
   
@@ -17,7 +17,7 @@ The dataset used in this project is the **Carvana dataset** from Kaggle. The dat
 All models in this project are based on the U-Net architecture, which is well-suited for semantic segmentation due to its encoder–decoder structure and skip connections that help in preserving spatial details.
 
 > **U-Net Diagram:**  
-> *[Insert U-Net diagram here]*
+![U-Net](/path/to/image.png "U-Net")
 
 ## 5. Implemented Models
 Three variants of U-Net were implemented in this project:
@@ -35,16 +35,15 @@ Three variants of U-Net were implemented in this project:
    - Designed for simplicity and clarity, this model does not rely on pre-trained weights and is implemented entirely in PyTorch.
 
 ## 6. Training and Evaluation Methodology
-The training process involves:
-- **Dataset Splitting:**  
+- **Dataset:**  
   The original training data is split into a training set and a validation set using a fixed random seed (to ensure reproducibility).
   
 - **Hyperparameters:**  
   Consistent hyperparameters (learning rate, batch size, number of epochs, etc.) are used across all models as defined in the configuration file.
   
 - **Metrics:**  
-  - **Training Loss and Validation Loss:** Monitored at each epoch.
-  - **Dice Coefficient and Intersection over Union (IoU):** Used as key metrics for evaluating segmentation quality.
+  - Training Loss and Validation Loss
+  - Dice Coefficient and Intersection over Union (IoU)
   
 - **Early Stopping and Checkpointing:**  
   The training is monitored with early stopping (based on validation loss) to prevent overfitting. The best model checkpoint is saved and used for final evaluation.
@@ -52,22 +51,16 @@ The training process involves:
 ## 7. Model Training Performance
 
 ### 7.1. U-Net with ResNet-34 Encoder
-- **Training/Validation Loss Curves:**  
-  *[Insert graph of training and validation loss over epochs for model 1]*  
-- **Dice and IoU Curves:**  
-  *[Insert graph of Dice and IoU scores over epochs for model 1]*
+- **Training/Validation Loss Curves | Dice and IoU Curves:**  
+  ![Model_1](/path/to/image.png "Model_1")
 
 ### 7.2. U-Net with EfficientNet-B0 Encoder
-- **Training/Validation Loss Curves:**  
-  *[Insert graph of training and validation loss over epochs for model 2]*  
-- **Dice and IoU Curves:**  
-  *[Insert graph of Dice and IoU scores over epochs for model 2]*
+- **Training/Validation Loss Curves | Dice and IoU Curves:**  
+  ![Model_2](/path/to/image.png "Model_2")
 
 ### 7.3. Custom U-Net Architecture
-- **Training/Validation Loss Curves:**  
-  *[Insert graph of training and validation loss over epochs for model 3]*  
-- **Dice and IoU Curves:**  
-  *[Insert graph of Dice and IoU scores over epochs for model 3]*
+- **Training/Validation Loss Curves | Dice and IoU Curves:**  
+  ![Model_3](/path/to/image.png "Model_3")
 
 ## 8. Model Comparison
 A brief comparison of the three models based on their training performance is as follows:
@@ -101,10 +94,8 @@ To further evaluate the models, a subset of the test dataset (which was original
   *[Insert test performance metrics: average loss, Dice, IoU for model 3]*
 
 ## 11. Conclusion
-This project demonstrated the implementation of binary semantic segmentation using U-Net architectures with different backbones and a fully custom U-Net. While the primary goal was not to maximize performance, each model provided unique insights into segmentation performance and model complexity.  
+This project demonstrated the implementation of binary semantic segmentation using U-Net architectures with different backbones and a fully custom U-Net. While the primary goal was not to maximize performance, each model provided insights into segmentation performance and model complexity.  
 - **Key Takeaways:**  
   - A robust training process with early stopping and checkpointing was implemented.
   - Different backbones can significantly affect training dynamics and performance.
   - The custom U-Net provides a clear, straightforward baseline that highlights the core principles of encoder–decoder architectures.
-  
-Further work can explore additional augmentations and model refinements, but overall, the models achieved acceptable segmentation performance, meeting the course requirements.
