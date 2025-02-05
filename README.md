@@ -9,7 +9,7 @@ The dataset used in this project is the **Carvana dataset** from Kaggle (https:/
 - **Test Data:** A separate test set without masks, from which a subset was manually labeled using Roboflow for evaluation purposes.
 
 > **Visualization**
-![Simple Visualization](/path/to/image.png "Simple Visualization")
+![Simple Visualization](https://github.com/Ivan-zwx/comp-vis-project/blob/master/other/simple_visualization.png "Simple Visualization")
 
 ## 3. Model Architecture Overview
 All models in this project are based on the U-Net architecture, which is well-suited for semantic segmentation due to its encoder–decoder structure and skip connections that help in preserving spatial details.
@@ -50,21 +50,36 @@ Three variants of U-Net were implemented in this project:
 
 ### 6.1. U-Net with ResNet-34 Encoder
 > **Training/Validation Loss Curves | Dice and IoU Curves:**  
-  ![Model_1](/path/to/image.png "Model_1")
+  ![Model_1](https://github.com/Ivan-zwx/comp-vis-project/blob/master/results/resnet34/resnet34_3_training_plot.png "Model_1")
 
 **Metrics:**  
+- Epoch: 14 (Checkpoint)
+- Train Loss: 0.005553
+- Val Loss: 0.007029
+- Val Dice: 0.993720
+- Val IoU: 0.987526
 
 ### 6.2. U-Net with EfficientNet-B0 Encoder
 > **Training/Validation Loss Curves | Dice and IoU Curves:**  
-  ![Model_2](/path/to/image.png "Model_2")
+  ![Model_2](https://github.com/Ivan-zwx/comp-vis-project/blob/master/results/efficientnet-b0/efficientnet-b0_1_training_plot.png "Model_2")
 
 **Metrics:**  
+- Epoch: 20 (End)
+- Train Loss: 0.004582
+- Val Loss: 0.006240
+- Val Dice: 0.994469
+- Val IoU: 0.989003
 
 ### 6.3. Custom U-Net Architecture
 > **Training/Validation Loss Curves | Dice and IoU Curves:**  
-  ![Model_3](/path/to/image.png "Model_3")
+  ![Model_3](https://github.com/Ivan-zwx/comp-vis-project/blob/master/results/custom_unet/custom_unet_2_training_plot.png "Model_3")
 
 **Metrics:**  
+- Epoch: 20 (End)
+- Train Loss: 0.007243
+- Val Loss: 0.007670
+- Val Dice: 0.993153
+- Val IoU: 0.986409
 
 *Note: Detailed numerical metrics and analysis will be added as the experiments are finalized.*
 
