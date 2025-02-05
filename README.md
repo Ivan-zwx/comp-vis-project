@@ -8,8 +8,8 @@ The dataset used in this project is the **Carvana dataset** from Kaggle (https:/
 - **Training Data:** Images and corresponding masks from the `train` and `train_masks` directories.
 - **Test Data:** A separate test set without masks, from which a subset was manually labeled using Roboflow for evaluation purposes.
 
-> **Visualization**
-![Simple Visualization](https://github.com/Ivan-zwx/comp-vis-project/blob/master/other/simple_visualization.png "Simple Visualization")
+> **Dataset Visualization**
+![Visualization](https://github.com/Ivan-zwx/comp-vis-project/blob/master/other/simple_visualization.png "Visualization")
 
 ## 3. Model Architecture Overview
 All models in this project are based on the U-Net architecture, which is well-suited for semantic segmentation due to its encoder–decoder structure and skip connections that help in preserving spatial details.
@@ -22,9 +22,10 @@ Three variants of U-Net were implemented in this project:
 
 1. **U-Net with ResNet-34 Encoder:**  
    - Uses a pre-trained ResNet-34 backbone as the encoder.
+   - Uses imagenet initial model weights.
    - The decoder is automatically adapted by the segmentation models library to match the encoder features.
    
-2. **U-Net with EfficientNet-B0 Encoder:**  
+2. **U-Net with EfficientNet-B0 Encoder:**
    - Similar to the first model but replaces the ResNet-34 backbone with an EfficientNet-B0 backbone.
    - The EfficientNet backbone provides different feature representations, which may affect performance.
    
@@ -80,8 +81,6 @@ Three variants of U-Net were implemented in this project:
 - Val Loss: 0.007670
 - Val Dice: 0.993153
 - Val IoU: 0.986409
-
-*Note: Detailed numerical metrics and analysis will be added as the experiments are finalized.*
 
 ## 7. Data Enrichment and Manual Annotation
 To further evaluate the models, a subset of the test dataset (which was originally unlabeled) was manually annotated using Roboflow (https://app.roboflow.com/orv-exercises/orv-carvana). Basic data augmentation techniques were applied programmatically to enhance this manually labeled subset.

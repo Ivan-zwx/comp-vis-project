@@ -1,8 +1,8 @@
 from torch.utils.data import DataLoader, random_split
 import torch
 
-from src.pipeline.data.data_transform import get_data_transform
-from src.pipeline.data.segmentation_dataset import SegmentationDataset
+from src.pipeline.data.data_transform import get_data_transform, get_manual_augment_transform
+from src.pipeline.data.segmentation_dataset import SegmentationDataset, ManualSegmentationDataset
 
 from src.config.parameters import DATALOADER_CONFIG, TRAINING_CONFIG
 
@@ -45,3 +45,15 @@ def get_train_val_loaders(root_dir, transform=get_data_transform(),
                             pin_memory=pin_memory, num_workers=num_workers)
 
     return train_loader, val_loader
+
+
+def get_manual_data_loader(root_dir, transform=get_manual_augment_transform(),
+                           batch_size=TRAINING_CONFIG["batch_size"],  # 50
+                           # GPU optimizations
+                           pin_memory=DATALOADER_CONFIG["pin_memory"],  # True
+                           num_workers=DATALOADER_CONFIG["num_workers"]):  # 10
+
+    dataset = ManualSegmentationDataset(root_dir, transform=transform)
+
+    return DataLoader(dataset, batch_size=batch_size, shuffle=False,
+                      pin_memory=pin_memory, num_workers=num_workers)
