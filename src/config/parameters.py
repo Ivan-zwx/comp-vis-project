@@ -31,7 +31,7 @@ TRAINING_CONFIG = {
     "learning_rate": 0.001,  # A critical hyperparameter; too high can cause divergence, too low slows convergence.
 
     # Number of epochs for training.
-    "num_epochs": 5,  # Total passes through the training data; impacts both training time and potential overfitting.
+    "num_epochs": 20,  # Total passes through the training data; impacts both training time and potential overfitting.
 
     # Batch size used during training and validation.
     "batch_size": 50,
