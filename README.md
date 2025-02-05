@@ -17,7 +17,7 @@ The dataset used in this project is the **Carvana dataset** from Kaggle (https:/
 All models in this project are based on the U-Net architecture, which is well-suited for semantic segmentation due to its encoder–decoder structure and skip connections that help in preserving spatial details.
 
 > **U-Net Diagram:**  
-![U-Net](/path/to/image.png "U-Net")
+![U-Net](https://github.com/Ivan-zwx/comp-vis-project/blob/master/other/u-net_diagram.png "U-Net")
 
 ## 5. Implemented Models
 Three variants of U-Net were implemented in this project:
